@@ -1,11 +1,3 @@
-export function handleDigitalInputs(selector) {    
-    for (const input of document.querySelectorAll(selector)) {
-        input.addEventListener('input', () => {
-            input.value = input.value.replace(/\D/, '');
-        });
-    }
-}
-
 export async function sendForm(url, data) {    
     // let object = {};
     // data.forEach((value, key) => object[key] = value);
