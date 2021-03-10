@@ -64,6 +64,10 @@ function forms() {
                 } else {
                     submitUrl = './assets/server.php';
                 }
+
+                if (item.contains(document.querySelector('.calc-price'))) {
+                    formData.set('price', document.querySelector('.calc-price').textContent);
+                }
     
                 sendForm(submitUrl, formData)            
                 .then(response => {

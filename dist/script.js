@@ -5474,6 +5474,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/mask */ "./src/js/modules/mask.js");
 /* harmony import */ var _modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/checkTextInputs */ "./src/js/modules/checkTextInputs.js");
 /* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
+/* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
+
 
 
 
@@ -5491,7 +5493,49 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="name"]');
   Object(_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="message"]');
   Object(_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row');
+  Object(_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/calc.js":
+/*!********************************!*\
+  !*** ./src/js/modules/calc.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function calc(sizeSelector, materialSelector, extraSelector, promocodeSelector, resultSelector) {
+  var sizeElem = document.querySelector(sizeSelector);
+  var materialElem = document.querySelector(materialSelector);
+  var extraElem = document.querySelector(extraSelector);
+  var promocodeElem = document.querySelector(promocodeSelector);
+  var resultElem = document.querySelector(resultSelector);
+  var sum = 0;
+  sizeElem.addEventListener('change', getResult);
+  materialElem.addEventListener('change', getResult);
+  extraElem.addEventListener('change', getResult);
+  promocodeElem.addEventListener('input', getResult);
+
+  function getResult() {
+    if (sizeElem.value == '' || materialElem.value == '') {
+      resultElem.textContent = 'Пожалуйста выберите размер и материал для расчета';
+      return;
+    }
+
+    sum = +sizeElem.value * +materialElem.value + +extraElem.value;
+
+    if (promocodeElem.value === 'IWANTPOPART') {
+      sum *= 0.7;
+    }
+
+    resultElem.textContent = sum;
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (calc);
 
 /***/ }),
 
@@ -5763,6 +5807,10 @@ function forms() {
             submitUrl = './assets/question.php';
           } else {
             submitUrl = './assets/server.php';
+          }
+
+          if (item.contains(document.querySelector('.calc-price'))) {
+            formData.set('price', document.querySelector('.calc-price').textContent);
           }
 
           Object(_services__WEBPACK_IMPORTED_MODULE_14__["sendForm"])(submitUrl, formData).then(function (response) {
