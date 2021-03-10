@@ -1,4 +1,4 @@
-import {handleDigitalInputs, sendForm} from './services';
+import {sendForm} from './services';
 
 function forms() {
     const formsList = document.querySelectorAll('form');

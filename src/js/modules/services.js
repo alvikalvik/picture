@@ -15,7 +15,17 @@ export async function sendForm(url, data) {
     if (response.ok) {                   
         return await response.text();            
     } else {         
-        throw new Error("Wrong server responce");
+        throw new Error(`Could not fetch ${url}, status: ${response.status}`);
+    }             
+}
+
+export async function getResource(url) {     
+    const response = await fetch(url);        
+
+    if (response.ok) {                   
+        return await response.json();            
+    } else {         
+        throw new Error(`Could not fetch ${url}, status: ${response.status}`);
     }             
 }
 
